@@ -1,0 +1,30 @@
+{
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+  "description": "Добавляйте стикеры и отправляйте их в сообщениях ВКонтакте",
+  "browser_action": {
+      "default_icon": {
+       "32": "icon/32.png"
+    },
+      "default_popup": "index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://vk.com/*"],
+      "css": ["css/vk_css.css"],
+      "js": ["js/vk_inj.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": {
+    "128": "icon/128.png",
+    "48": "icon/48.png",
+    "32": "icon/32.png",
+    "16": "icon/16.png"
+  },
+  "manifest_version": 2,
+  "name": "VK Fake Stickers",
+  "permissions": [ "contextMenus", "tabs", "storage", "notifications", "downloads", "http://*/*", "https://*/*" ],
+  "version": "1.0"
+}

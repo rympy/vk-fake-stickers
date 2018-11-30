@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+    <head>
+    	<meta charset="UTF-8">
+        <title>Settings</title>
+		<link rel="stylesheet" href="css/style.css">
+		<script src="js/settings.js"></script>
+		<style type="text/css">
+			#back {float: left; margin-right: 10px;}
+			#appid, #token {width: 115px;}
+			#width_sticker {width: 34px; margin-top: 6px;}
+			a#config_s {padding: 0px 5px;float: right;}
+		</style>
+    </head>
+<body>
+	<header><a id="back" href="index.html"><img src="icon/b.png"></a> Настройки
+	<a id="config_s" title="управление настройками" href="config_settings.html" target="_blank"><img src="icon/cfg.png"></a>
+</header>
+
+	<main>
+		<div id="settings">
+			APPID: <input id="appid" type="number" value=""> <br />
+
+			<label class="container">Вкл. ресайз стиков<input id="enable_size" type="checkbox"><span class="checkmark"></span></label>
+
+			<div id="div_sz" style="display: none">
+				Token: <input id="token" type="text" value=""> <a target="_blank" href="help.html#resize"><img src="icon/help.png"></a> <br />
+				Размер стикеров: <input id="width_sticker" type="number" value=""> px
+			</div> 
+
+			<a id="save">Сохранить</a>
+
+		</div>
+	</main>
+
+</body>
+</html>
