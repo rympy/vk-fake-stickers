@@ -71,10 +71,12 @@ function sticker_panel() {
 		chrome.storage.local.get(['vkaccess_token', 'sticker_pack'], function(data) {
 
 			if (data.vkaccess_token === undefined && data.sticker_pack === undefined || !Object.keys(data.sticker_pack).length) {
+	            if (document.getElementById('no_sticker')) return;
+	            
 	            var div = document.createElement('div');
 	            div.id = 'no_sticker';
 	            document.getElementById(PANEL_ID).appendChild(div);
-	            return
+	            return;
         	}
 
         	if (data.sticker_pack.length != LENGHT_PACK || NEED_RELOAD || !p.children.length) reload_panel(p); else return;
@@ -126,7 +128,7 @@ function create_button() {
 
 	    var panel = document.createElement('div');
 	    panel.id = PANEL_ID;
-	    document.getElementsByClassName('im-page--chat-input')[0].appendChild(panel);
+	    document.getElementsByClassName('im-chat-input')[0].appendChild(panel);
 
 	    div[0].appendChild(btn_sticker);
 
