@@ -231,7 +231,7 @@ function getClickHandler() {
             }
 
             var vkCLientId           = items.APP_ID,
-                vkRequestedScopes    = 'docs,messages,offline',
+                vkRequestedScopes    = 'docs,offline',
                 vkAuthenticationUrl  = 'https://oauth.vk.com/authorize?client_id=' + vkCLientId + '&scope=' + vkRequestedScopes + '&redirect_uri=http%3A%2F%2Foauth.vk.com%2Fblank.html&display=page&response_type=token';
 
             if (items.vkaccess_token === undefined) {

@@ -2,39 +2,10 @@
 var BTN_ID = 'btn_fake_smile',
 	PANEL_ID = 'sticker_panel',
 	TMP_HREF = document.location.href,
+	DUMP_DATA = JSON.stringify({editable:{sizes:{s:[],m:[]},label:'',href:''}}),
 	LENGHT_PACK = 0,
 	NEED_RELOAD = false;
 
-
-function parse_url() {
-	var s = window.location.search;
-	if (s.indexOf('sel=c') > -1) {
-		return 'chat_id=' + s.split('sel=c')[1];
-	} else if (s.indexOf('sel=') > -1) {
-		return 'peer_id=' + s.split('sel=')[1];;
-	}
-}
-
-
-function send_fake_sticker(token, attach) {
-    var peer = parse_url(),
-    	random_id = Date.now(),
-    	api_version = '5.92',
-    	SendRequest = new XMLHttpRequest();
-
-    if (!peer) return;
-
-    SendRequest.open('GET', `https://api.vk.com/method/messages.send?${peer}&attachment=${attach}&random_id=${random_id}&access_token=${token}&v=${api_version}`);
-
-    SendRequest.onload = function () {
-        var answer = JSON.parse(SendRequest.response);
-        if (answer.error !== undefined) {
-        	console.log('VK Fake Stickers:', answer.error.error_code, answer.error.error_msg);
-    	}
-    };
-
-    SendRequest.send(); 
-}
 
 
 function first_place(a) {
@@ -62,15 +33,24 @@ function reload_panel(p) {
 }
 
 
+function fix_media_preview() {
+	document.getElementById('_im_media_preview').style.display = 'none';
+	document.querySelector('button.im-send-btn_send').click();
+	document.getElementById('_im_media_preview').style.display = 'block';
+}
+
+
 function sticker_panel() {
 	var p = document.getElementById(PANEL_ID);
 	
 	if (!p.style.display) {
+		document.querySelector('div._im_media_selector.im-chat-input--selector').click();	//fix chooseMedia
+
 		p.style.display = 'block';
 
-		chrome.storage.local.get(['vkaccess_token', 'sticker_pack'], function(data) {
+		chrome.storage.local.get(['sticker_pack'], function(data) {
 
-			if (data.vkaccess_token === undefined && data.sticker_pack === undefined || !Object.keys(data.sticker_pack).length) {
+			if (data.sticker_pack === undefined || !Object.keys(data.sticker_pack).length) {
 	            if (document.getElementById('no_sticker')) return;
 	            
 	            var div = document.createElement('div');
@@ -85,10 +65,13 @@ function sticker_panel() {
 
 	        data.sticker_pack.forEach(function(a) {
 	            var link = document.createElement('a'),
-	            	img = document.createElement('img');
+	            	img = document.createElement('img'),
+	            	owner_id = a[1].slice(3);
 
 	            img.src = a[0];
 	            link.appendChild(img);
+
+	            link.setAttribute("onclick", `cur.chooseMedia('doc', '${owner_id}', ${DUMP_DATA});`);
 
 	            if (a[2] > time) {
 	            	var nw = document.createElement('span');
@@ -99,7 +82,7 @@ function sticker_panel() {
 	            p.insertBefore(link, p.firstChild);
 
 	            link.addEventListener('click', function() {
-	            	send_fake_sticker(data.vkaccess_token, a[1]);
+	            	fix_media_preview()
 	            	first_place(a[1]);
 	            }, false);
 
@@ -122,7 +105,7 @@ function create_button() {
 	if (!btn) {
 		var div = document.getElementsByClassName('im_chat-input--buttons');
 		if (!div.length) return;
-	
+
 	    var btn_sticker = document.createElement('span');
 	    btn_sticker.id = BTN_ID;
 
@@ -149,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	window.onload = function() {
 
 	    var body = document.querySelector("body");
-	    
+
 	    if (document.location.href.indexOf('vk.com/im') > -1) create_button();
 
 	    var observer = new MutationObserver(function(mutations) {
