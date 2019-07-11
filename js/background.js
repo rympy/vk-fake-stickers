@@ -92,6 +92,15 @@ function upload(imageUrl, accToken, rsize) {
                 documentSaveRequest.onload = function () {
                     var answer = JSON.parse(documentSaveRequest.response);
 
+                    if (answer.error !== undefined) {
+                        if (answer.error.error_code === 14) {
+                            var captcha_url = chrome.extension.getURL('vk-captcha.html') + '?sid=' + answer.error.captcha_sid + '&token=' + accToken;
+                            chrome.tabs.create({url: captcha_url, selected: true});
+                            show_notification('icon/error.png', 'Капча', 'Введите капчу чтобы добавить стикеры', 5000);
+                        }
+                        return;
+                    }
+
                     if (answer.response.graffiti === undefined) {
                         show_notification('icon/error.png', 'Error', 'VKAPI Error: Docs.Save - no file in response!', 5000);
                         return;

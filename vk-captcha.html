@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+    <head>
+    	<meta charset="UTF-8">
+        <title>Captcha</title>
+		<script src="js/vk-captcha.js"></script>
+		<style type="text/css">
+			body{font-family:Open Sans,sans-serif;background:#4a4b4b}
+			.parent{width:100%;height:100%;position:fixed;top:0;left:0;overflow:auto}
+			.block{position:absolute;top:35%;left:50%;transform:translate(-50%,-50%)}
+			.block_c{width: 305px;}
+			.box_title_wrap{padding:0;background-color:#5b88bd;color:#fff;border-radius:4px 4px 0 0;padding:17px;font-size:13px}
+			.box_body{background:#fff;padding:15px;text-align:center}
+			input{color:#000;border:1px solid #d3d9de;height:35px;outline:0;padding:6px 12px 8px;box-sizing:border-box;border-radius:3px;width:165px;margin-top:7px}
+			.box_controls{padding:14px 23px 14px 25px;height:29px;background-color:#fafbfc;border-radius:0 0 4px 4px;border-top:1px solid #e7e8ec;text-align:right}
+			#send{padding:7px 16px 8px;font-size:12.5px;display:inline-block;cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;text-align:center;text-decoration:none;background-color:#5181b8;color:#fff;border-radius:4px;box-sizing:border-box}
+			#send:hover{background-color:#5b88bd}
+			.info{background:#fff;padding:4px 17px;border-top:1px solid #e7e8ec;height:31px;font-size:11px;color:#585858}
+		</style>
+    </head>
+<body>
+
+
+<div class="parent">
+	<div class="block">
+		<div class="block_c">
+
+			<div class="box_title_wrap">Введите код с картинки</div>
+
+			<div class="box_body">
+				<img id="sid" src="">
+				<input id="captcha_key" type="text" value="" placeholder="Введите код" maxlength="7">
+			</div>
+
+			<div class="info">! Если код введен верно – это окно автоматически закроется</div>
+
+			<div class="box_controls">
+				<a id="send">Отправить</a>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>

@@ -26,5 +26,5 @@
   "manifest_version": 2,
   "name": "VK Fake Stickers",
   "permissions": [ "contextMenus", "tabs", "storage", "notifications", "downloads", "http://*/*", "https://*/*" ],
-  "version": "1.2"
+  "version": "1.3"
 }
